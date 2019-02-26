@@ -29,7 +29,9 @@ import imgSrc5 from "../../img/portfolio/thumbnails/5.jpg";
 import imgSrc6 from "../../img/portfolio/thumbnails/6.jpg";
 import AuthActions from "../../store/actions/authActions";
 import { Modal, Carousel } from "react-bootstrap";
+
 const client = new DirectusSDK();
+
 const moves = (from, to, ...a) =>
   from === to ? a : (a.splice(to, 0, ...a.splice(from, 1)), a);
 class Home extends Component {
@@ -43,15 +45,33 @@ class Home extends Component {
       ImIndex: null
     };
   }
-  componentWillMount() {
+  async componentWillMount() {
     this.props.getData();
+    const savedToken = await window.sessionStorage.getItem("token")
+    window.addEventListener('beforeunload', function(event) {
+      client.refresh(savedToken)
+      .then(({ token }) => {
+          window.sessionStorage.setItem("token", token);
+      });
+    });
   }
-  // componentWillUpdate () {
-  //   window.addEventListener("scroll", function (event) {
-  //     console.log(this.scrollY, "EVNET");
-  //     this.setState({scroll:this.screenY})
-  // });
-  // }
+  async componentWillReceiveProps (nextProps) {
+    console.log(nextProps.err, "EORRR");
+    if(nextProps.err === 'Expired token' || nextProps.err === 'Reading items from "home" collection was denied'){
+      const savedToken = await window.sessionStorage.getItem("token")
+      window.addEventListener('beforeunload', function(event) {
+        client.refresh(savedToken)
+        .then(({ token }) => {
+            window.sessionStorage.setItem("token", token);
+        });
+      });
+      nextProps.getData();
+    }
+    //   window.addEventListener("scroll", function (event) {
+    //     console.log(this.scrollY, "EVNET");
+    //     this.setState({scroll:this.screenY})
+    // });
+  }
   componentDidMount() {
     var get = this.handleScrol;
     window.addEventListener("scroll", function(event) {
@@ -374,7 +394,7 @@ class ImageModal extends React.Component {
       >
         <Carousel>
           {this.state.images.map((image, i) => (
-            <Carousel.Item>
+            <Carousel.Item key={i.toString()}>
               <img className="d-block w-100" src={image} alt="First slide" />
               <Carousel.Caption>
                 <h3>First slide label</h3>

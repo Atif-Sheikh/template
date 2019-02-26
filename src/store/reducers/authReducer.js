@@ -15,7 +15,9 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 data: {},
-                isLoading: true
+                isLoading: true,
+                isError: false,
+                error: null
             };
         case ActionTypes.GET_DATA_SUCCESS:
             return {
