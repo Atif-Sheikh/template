@@ -13,7 +13,6 @@ var height = 0;
 export default class Navbar extends React.Component {
     render(){
         const { scroll } = this.props;
-        console.log(scroll, 'sssssssssssssssssssssss')
         return (
             <nav className={scroll>100?'navbar navbar-expand-lg navbar-light fixed-top py-3 navbar-scrolled':"navbar navbar-expand-lg navbar-light fixed-top py-3"} id="mainNav">
                 <div className="container">

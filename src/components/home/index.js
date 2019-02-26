@@ -56,7 +56,6 @@ class Home extends Component {
     });
   }
   async componentWillReceiveProps (nextProps) {
-    console.log(nextProps.err, "EORRR");
     if(nextProps.err === 'Expired token' || nextProps.err === 'Reading items from "home" collection was denied'){
       const savedToken = await window.sessionStorage.getItem("token")
       window.addEventListener('beforeunload', function(event) {
@@ -75,7 +74,6 @@ class Home extends Component {
   componentDidMount() {
     var get = this.handleScrol;
     window.addEventListener("scroll", function(event) {
-      console.log(this.scrollY, "EVNET");
       get(this.scrollY);
       // this.setState({scroll:this.screenY})
     });
@@ -112,7 +110,6 @@ class Home extends Component {
         } */}
         <Navbar scroll={this.state.scroll} />
         <Header data={data} />
-        {console.log("MadarCh*****", this.state.scroll)}
         <ImageModal
           show={this.state.modalShow}
           onHide={modalClose}
