@@ -12,7 +12,7 @@ export default class AuthActions {
                 })
                 .catch((err) => {
                     console.log(err, "EEORRRR");
-                    dispatch({ type: ActionTypes.GET_DATA_FAIL, msg: 'err.message' });
+                    dispatch({ type: ActionTypes.GET_DATA_FAIL, msg: err.message });
                 })
         }
     };

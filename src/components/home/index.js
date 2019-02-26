@@ -77,6 +77,19 @@ class Home extends Component {
 
     return (
       <div className="App">
+        {/* {
+          isLoading && <CircularProgress 
+            style={{ 
+              width: '100px', 
+              height: '100px', 
+              margin: '0px auto', 
+              textAlign: 'center',
+              position: 'absolute',
+              top: '40%',
+              left: '50%'
+            }} 
+          /> 
+        } */}
         <Navbar scroll={this.state.scroll} />
         <Header data={data} />
         {console.log("MadarCh*****", this.state.scroll)}

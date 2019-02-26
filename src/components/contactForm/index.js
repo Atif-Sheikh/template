@@ -2,6 +2,12 @@ import React from 'react';
 import { Form, Col, Button, Jumbotron, FormText } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faInbox, faWifi, faDizzy, faEdit, faFileContract } from '@fortawesome/free-solid-svg-icons';
+import fbIcon from '../../icons/brands/facebook.svg';
+import linkedinIcon from '../../icons/brands/linkedin.svg';
+import instIcon from '../../icons/brands/instagram.svg';
+import lineIcon from '../../icons/brands/line.svg';
+import skypeIcon from '../../icons/brands/skype.svg';
+import viberIcon from '../../icons/brands/viber.svg';
 
 export default class ContactForm extends React.Component {
     render() {
@@ -49,12 +55,12 @@ export default class ContactForm extends React.Component {
                             written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. 
                             The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
                         <div style={styles.fontSection}>
-                            <FontAwesomeIcon style={styles.icons} icon={faDizzy} />
-                            <FontAwesomeIcon style={styles.icons} icon={faEdit} />
-                            <FontAwesomeIcon style={styles.icons} icon={faInbox} />
-                            <FontAwesomeIcon style={styles.icons} icon={faWifi} />
-                            <FontAwesomeIcon style={styles.icons} icon={faLink} />
-                            <FontAwesomeIcon style={styles.icons} icon={faFileContract} /> 
+                            <img style={styles.icons} src={fbIcon} alt='Facebook' />
+                            <img style={styles.icons} src={linkedinIcon} alt='Linkedin' />
+                            <img style={styles.icons} src={instIcon} alt='Instagram' />
+                            <img style={styles.icons} src={lineIcon} alt='Line' />
+                            <img style={styles.icons} src={skypeIcon} alt='Skype' />
+                            <img style={styles.icons} src={viberIcon} alt='Viber' />
                         </div>
                         </p>
                     </div>
@@ -112,6 +118,7 @@ const styles = {
     icons: {
         marginRight: '10px',
         cursor: 'pointer',
-        color: 'purple'
+        color: 'purple',
+        width: 20
     }
 };
