@@ -57,7 +57,7 @@ class Home extends Component {
     });
   }
   async componentWillReceiveProps(nextProps) {
-    if(nextProps.token){
+    if(nextProps.token !== this.props.token){
       console.log("YE chaalaa maaa kaaa")
       this.props.getData(nextProps.token);
     }

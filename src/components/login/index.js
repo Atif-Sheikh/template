@@ -24,6 +24,7 @@ class UserRegistry extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.token) {
       this.props.history.push('/');
+      this.props.getData(nextProps.token);
     }
   };
   onSubmit = (e) => {
@@ -112,6 +113,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     signIn: (obj) => dispatch(AuthActions.login(obj)),
+    getData: (token) => dispatch(AuthActions.getData(token)),
   };
 };
 
