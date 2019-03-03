@@ -5,6 +5,7 @@ import './App.css';
 import store from './store';
 import Home from './components/home';
 import Login from './components/login';
+import Signup from './components/signup';
 import ContactForm from './components/contactForm';
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
           <Router>
             <div>
               <Route exact path="/" component={Home} />
+              <Route exact path="/signup" component={Signup} />
               <Route exact path="/Login" component={Login} />
               <Route exact path="/contact" component={ContactForm} />
             </div>

@@ -1,24 +1,39 @@
 import React, { Component } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
+import { connect } from "react-redux";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import AuthActions from "../../store/actions/authActions";
 
 class UserRegistry extends Component {
   constructor() {
     super();
     this.state = {
-      value: "one"
+      email: '',
+      password: '',
+      disabled: true
     };
   }
 
-  handleChange = (event, value) => {
-    this.setState({ value });
+  handleChange = (key, value) => {
+    const { email, password } = this.state;
+    this.setState({ [key]: value });
+    if (email && password) {
+      this.setState({ disabled: false });
+    }
   };
-
-  handleChangeIndex = index => {
-    this.setState({ value: index });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.token) {
+      this.props.history.push('/');
+    }
   };
-
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = this.state;
+    if (email.trim() && password.trim()) {
+      this.props.signIn({ email, password });
+    }
+  };
   render() {
-    const { value } = this.state;
     return (
       <Container>
         <Card style={styles.card} className="bg-dark text-white">
@@ -26,7 +41,7 @@ class UserRegistry extends Component {
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label style={styles.setFontFamily}>Email address</Form.Label>
-              <Form.Control style={styles.setFontFamily} type="email" placeholder="Enter email" />
+              <Form.Control style={styles.setFontFamily} onChange={(e) => this.handleChange('email', e.target.value)} type="email" placeholder="Enter email" />
               <Form.Text style={styles.setFontFamily} className="text-muted">
                 We'll never share your email with anyone else.
               </Form.Text>
@@ -34,14 +49,24 @@ class UserRegistry extends Component {
 
             <Form.Group controlId="formBasicPassword">
               <Form.Label style={styles.setFontFamily}>Password</Form.Label>
-              <Form.Control style={styles.setFontFamily} type="password" placeholder="Password" />
+              <Form.Control style={styles.setFontFamily} onChange={(e) => this.handleChange('password', e.target.value)} type="password" placeholder="Password" />
             </Form.Group>
             <Form.Group controlId="formBasicChecbox">
               <Form.Check style={styles.setFontFamily} type="checkbox" label="Stay login" />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            {
+              this.props.err &&
+              <Form.Text style={styles.error}>
+                {this.props.err}
+              </Form.Text>
+            }
+            {
+              this.props.isLoading ? <CircularProgress />
+                :
+                <Button onClick={this.onSubmit} disabled={this.state.disabled} variant="primary" type="submit">
+                  Submit
+                </Button>
+            }
           </Form>
         </Card>
       </Container>
@@ -52,9 +77,9 @@ class UserRegistry extends Component {
 const styles = {
   card: {
     width: '70%',
-    height: '50vh',
+    height: '70vh',
     margin: '0 auto',
-    padding: '70px',
+    padding: '40px',
     position: 'absolute',
     top: '15%',
     left: '15%',
@@ -67,7 +92,30 @@ const styles = {
   },
   setFontFamily: {
     fontFamily: 'sans-serif'
+  },
+  error: {
+    fontFamily: 'sans-serif',
+    fontSize: '15px',
+    color: '#cc6e6e',
+    paddingBottom: '12px'
   }
 }
 
-export default UserRegistry;
+const mapStateToProps = state => {
+  return {
+    err: state.authReducer.loginError,
+    isLoading: state.authReducer.loginLoading,
+    token: state.authReducer.token
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    signIn: (obj) => dispatch(AuthActions.login(obj)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserRegistry);

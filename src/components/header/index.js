@@ -10,10 +10,13 @@ import '../../scss/_variables.scss';
 import '../../scss/creative.scss';
 
 function getHTML(id, txt) {
-    document.getElementById(id).innerHTML = txt; 
+    let ele = document.getElementById(id);
+    if (ele) {
+        ele.innerHTML = txt;
+    }
 };
 
-export default function({ data }) {
+export default function ({ data }) {
     return (
         <header className="masthead">
             <div className="container h-100">

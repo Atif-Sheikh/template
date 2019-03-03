@@ -28,12 +28,11 @@ import imgSrc4 from "../../img/portfolio/thumbnails/4.jpg";
 import imgSrc5 from "../../img/portfolio/thumbnails/5.jpg";
 import imgSrc6 from "../../img/portfolio/thumbnails/6.jpg";
 import AuthActions from "../../store/actions/authActions";
-import { Modal, Carousel } from "react-bootstrap";
+import ImageModal from "../imageModal";
+import ProjectActions from "../../store/actions/projectActions";
 
 const client = new DirectusSDK();
 
-const moves = (from, to, ...a) =>
-  from === to ? a : (a.splice(to, 0, ...a.splice(from, 1)), a);
 class Home extends Component {
   constructor() {
     super();
@@ -46,26 +45,32 @@ class Home extends Component {
     };
   }
   async componentWillMount() {
-    this.props.getData();
+
+    // this.props.getData();
+    // this.props.getMidData();
     const savedToken = await window.sessionStorage.getItem("token")
-    window.addEventListener('beforeunload', function(event) {
+    window.addEventListener('beforeunload', function (event) {
       client.refresh(savedToken)
-      .then(({ token }) => {
+        .then(({ token }) => {
           window.sessionStorage.setItem("token", token);
-      });
+        });
     });
   }
-  async componentWillReceiveProps (nextProps) {
-    if(nextProps.err === 'Expired token' || nextProps.err === 'Reading items from "home" collection was denied'){
-      const savedToken = await window.sessionStorage.getItem("token")
-      window.addEventListener('beforeunload', function(event) {
-        client.refresh(savedToken)
-        .then(({ token }) => {
-            window.sessionStorage.setItem("token", token);
-        });
-      });
-      nextProps.getData();
+  async componentWillReceiveProps(nextProps) {
+    if(nextProps.token){
+      console.log("YE chaalaa maaa kaaa")
+      this.props.getData(nextProps.token);
     }
+    // if (nextProps.err === 'Expired token' || nextProps.err === 'Reading items from "home" collection was denied') {
+    //   const savedToken = await window.sessionStorage.getItem("token")
+    //   window.addEventListener('beforeunload', function (event) {
+    //     client.refresh(savedToken)
+    //       .then(({ token }) => {
+    //         window.sessionStorage.setItem("token", token);
+    //       });
+    //   });
+    //   nextProps.getData();
+    // }
     //   window.addEventListener("scroll", function (event) {
     //     console.log(this.scrollY, "EVNET");
     //     this.setState({scroll:this.screenY})
@@ -73,10 +78,15 @@ class Home extends Component {
   }
   componentDidMount() {
     var get = this.handleScrol;
-    window.addEventListener("scroll", function(event) {
+    window.addEventListener("scroll", function (event) {
       get(this.scrollY);
       // this.setState({scroll:this.screenY})
     });
+    if(!Boolean(this.props.token)){
+      // this.props.getData();
+      this.props.signIn({email: "public@fairweb.at",
+      password: "Password1"});
+    }
   }
 
   handleScrol = event => {
@@ -86,7 +96,10 @@ class Home extends Component {
   };
 
   getHTML = (id, txt) => {
-    document.getElementById(id).innerHTML = txt;
+    let ele = document.getElementById(id);
+    if (ele) {
+      ele.innerHTML = txt;
+    }
   };
 
   render() {
@@ -354,58 +367,19 @@ const mapStateToProps = state => {
     data: state.authReducer.data,
     isLoading: state.authReducer.isLoading,
     isError: state.authReducer.isError,
-    err: state.authReducer.error
+    err: state.authReducer.error,
+    token: state.authReducer.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getData: () => dispatch(AuthActions.getData())
+    getData: (token) => dispatch(AuthActions.getData(token)),
+    getMidData: () => dispatch(ProjectActions.getMidData()),
+    signIn: (obj) => dispatch(AuthActions.login(obj)),
   };
 };
-class ImageModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      images: []
-    };
-  }
-  componentWillReceiveProps(nextProps) {
-    const { images, imageindex } = nextProps;
-    if (imageindex) {
-      var shuffled = moves(imageindex - 1, 0, ...images);
-      this.setState({ images: shuffled });
-      console.log(shuffled, imageindex);
-    } else {
-      this.setState({ images: images });
-    }
-  }
 
-  render() {
-    return (
-      <Modal
-        {...this.props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Carousel>
-          {this.state.images.map((image, i) => (
-            <Carousel.Item key={i.toString()}>
-              <img className="d-block w-100" src={image} alt="First slide" />
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          ))}
-        </Carousel>
-      </Modal>
-    );
-  }
-}
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -18,6 +18,13 @@ class ActionTypes {
     static GET_DATA_SUCCESS = 'GET_DATA_SUCCESS';
     static GET_DATA_FAIL = 'GET_DATA_FAIL';
 
+    static GET_MID_DATA = 'GET_MID_DATA';
+    static GET_MID_DATA_SUCCESS = 'GET_MID_DATA_SUCCESS';
+    static GET_MID_DATA_FAILED = 'GET_MID_DATA_FAILED';
+
+    static LOGIN = 'LOGIN';
+    static LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+    static LOGIN_FAILED = 'LOGIN_FAILED';
 
 };
 
