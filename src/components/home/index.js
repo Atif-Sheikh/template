@@ -48,7 +48,7 @@ class Home extends Component {
 
     // this.props.getData();
     // this.props.getMidData();
-    const savedToken = await window.sessionStorage.getItem("token")
+    const savedToken = await window.sessionStorage.getItem("token");
     window.addEventListener('beforeunload', function (event) {
       client.refresh(savedToken)
         .then(({ token }) => {
@@ -57,8 +57,7 @@ class Home extends Component {
     });
   }
   async componentWillReceiveProps(nextProps) {
-    if(nextProps.token !== this.props.token){
-      console.log("YE chaalaa maaa kaaa")
+    if (nextProps.token !== this.props.token) {
       this.props.getData(nextProps.token);
     }
     // if (nextProps.err === 'Expired token' || nextProps.err === 'Reading items from "home" collection was denied') {
@@ -82,10 +81,12 @@ class Home extends Component {
       get(this.scrollY);
       // this.setState({scroll:this.screenY})
     });
-    if(!Boolean(this.props.token)){
+    if (!Boolean(this.props.token)) {
       // this.props.getData();
-      this.props.signIn({email: "public@fairweb.at",
-      password: "Password1"});
+      this.props.signIn({
+        email: "public@fairweb.at",
+        password: "Password1"
+      });
     }
   }
 
@@ -104,24 +105,9 @@ class Home extends Component {
 
   render() {
     const { data, err, isLoading, isError } = this.props;
-    console.log(data, "YAhOoooooooooooooooooooooooooooooooo");
     let modalClose = () => this.setState({ modalShow: false });
-
     return (
       <div className="App">
-        {/* {
-          isLoading && <CircularProgress 
-            style={{ 
-              width: '100px', 
-              height: '100px', 
-              margin: '0px auto', 
-              textAlign: 'center',
-              position: 'absolute',
-              top: '40%',
-              left: '50%'
-            }} 
-          /> 
-        } */}
         <Navbar scroll={this.state.scroll} />
         <Header data={data && data.home} />
         <ImageModal
@@ -134,10 +120,10 @@ class Home extends Component {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-8 text-center">
-                <h2 className="text-white mt-0">{ data && data.about && data.about.title }</h2>
+                <h2 className="text-white mt-0">{data && data.about && data.about.title}</h2>
                 <hr className="divider light my-4" />
                 <p id='aboutPara' className="text-white-50 mb-4">
-                  { data && data.about && this.getHTML('aboutPara', data.about.content) }
+                  {data && data.about && this.getHTML('aboutPara', data.about.content)}
                 </p>
                 <a
                   className="btn btn-light btn-xl js-scroll-trigger"
@@ -152,7 +138,7 @@ class Home extends Component {
 
         <section className="page-section" id="services">
           <div className="container">
-            <h2 className="text-center mt-0">{ data && data.service && data.service.title }</h2>
+            <h2 className="text-center mt-0">{data && data.service && data.service.title}</h2>
             <hr className="divider my-4" />
             <div className="row">
               <div className="col-lg-3 col-md-6 text-center">
@@ -315,10 +301,10 @@ class Home extends Component {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-8 text-center">
-                <h2 className="mt-0">{ data && data.contact && data.contact.title }</h2>
+                <h2 className="mt-0">{data && data.contact && data.contact.title}</h2>
                 <hr className="divider my-4" />
                 <p id='contactPara' className="text-muted mb-5">
-                  { data && data.contact && this.getHTML('contactPara', data.contact.content) }
+                  {data && data.contact && this.getHTML('contactPara', data.contact.content)}
                 </p>
               </div>
             </div>

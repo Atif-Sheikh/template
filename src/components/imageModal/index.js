@@ -17,7 +17,6 @@ export default class ImageModal extends React.Component {
         if (imageindex) {
             var shuffled = moves(imageindex - 1, 0, ...images);
             this.setState({ images: shuffled });
-            console.log(shuffled, imageindex);
         } else {
             this.setState({ images: images });
         }

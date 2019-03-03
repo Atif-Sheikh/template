@@ -21,7 +21,6 @@ class Signup extends Component {
 
     };
     render() {
-        console.log(this.state)
         return (
             <Container>
                 <Card style={styles.card} className="bg-dark text-white">

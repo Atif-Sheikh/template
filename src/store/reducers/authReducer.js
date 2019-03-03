@@ -12,7 +12,6 @@ const initialState = {
     loginError: ''
 };
 export default function authReducer(state = initialState, action) {
-    console.log(action, "ACtionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
     switch (action.type) {
         case ActionTypes.LOGIN:
             return {
@@ -50,7 +49,6 @@ export default function authReducer(state = initialState, action) {
                 isLoading: false
             }
         case ActionTypes.GET_DATA_FAIL:
-            console.log(action.msg, " ????????????????????????????????????")
             return {
                 ...state,
                 isLoading: false,

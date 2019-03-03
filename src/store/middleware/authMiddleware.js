@@ -43,7 +43,6 @@ export default class AuthMiddleWare {
             let service = await client.getItems('service', { 'access_token': token });
             allData['service'] = service.data[0];
 
-            console.log(allData, "ABoutttttttttttttttttttttttttttttttttttttttt>>>>>>>>>>>>>>>>")
             return allData;
         }
         catch (err) {
@@ -65,7 +64,6 @@ export default class AuthMiddleWare {
             if (result.token) {
                 return result.token;
             }
-            console.log(result, "Chal jaaaaaaaaaaaaaaa")
             // .then(({ token }) => {
             //     console.log(token, "MAAAA KAAAAAAAAAAAAAA KUSSSSSSSSSSSSS")
             //     return token;
