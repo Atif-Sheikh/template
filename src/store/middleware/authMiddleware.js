@@ -22,9 +22,29 @@ export default class AuthMiddleWare {
             //     })
             //     .catch(error => console.error(error));
             // const savedToken = await window.sessionStorage.getItem("token");
+            let allData = {};
+
             let data = await client.getItems('home', { 'access_token': token });
-            console.log(data, "U DALDJKLSJDKL");
-            return data.data[0];
+            allData['home'] = data.data[0];
+
+            let about = await client.getItems('about', { 'access_token': token });
+            allData['about'] = about.data[0];
+
+            //about condition contact portfolio service
+            let condition = await client.getItems('condition', { 'access_token': token });
+            allData['condition'] = condition.data[0];
+
+            let contact = await client.getItems('contact', { 'access_token': token });
+            allData['contact'] = contact.data[0];
+
+            let portfolio = await client.getItems('portfolio', { 'access_token': token });
+            allData['portfolio'] = portfolio.data[0];
+
+            let service = await client.getItems('service', { 'access_token': token });
+            allData['service'] = service.data[0];
+
+            console.log(allData, "ABoutttttttttttttttttttttttttttttttttttttttt>>>>>>>>>>>>>>>>")
+            return allData;
         }
         catch (err) {
             console.log("ERRR", err);
@@ -42,7 +62,7 @@ export default class AuthMiddleWare {
                 persist: false,
                 storage: window.localStorage,
             })
-            if(result.token){
+            if (result.token) {
                 return result.token;
             }
             console.log(result, "Chal jaaaaaaaaaaaaaaa")

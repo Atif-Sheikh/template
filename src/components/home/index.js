@@ -104,6 +104,7 @@ class Home extends Component {
 
   render() {
     const { data, err, isLoading, isError } = this.props;
+    console.log(data, "YAhOoooooooooooooooooooooooooooooooo");
     let modalClose = () => this.setState({ modalShow: false });
 
     return (
@@ -122,7 +123,7 @@ class Home extends Component {
           /> 
         } */}
         <Navbar scroll={this.state.scroll} />
-        <Header data={data} />
+        <Header data={data && data.home} />
         <ImageModal
           show={this.state.modalShow}
           onHide={modalClose}
@@ -133,13 +134,10 @@ class Home extends Component {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-8 text-center">
-                <h2 className="text-white mt-0">We've got what you need!</h2>
+                <h2 className="text-white mt-0">{ data && data.about && data.about.title }</h2>
                 <hr className="divider light my-4" />
-                <p className="text-white-50 mb-4">
-                  Start Bootstrap has everything you need to get your new
-                  website up and running in no time! Choose one of our open
-                  source, free to download, and easy to use themes! No strings
-                  attached!
+                <p id='aboutPara' className="text-white-50 mb-4">
+                  { data && data.about && this.getHTML('aboutPara', data.about.content) }
                 </p>
                 <a
                   className="btn btn-light btn-xl js-scroll-trigger"
@@ -154,7 +152,7 @@ class Home extends Component {
 
         <section className="page-section" id="services">
           <div className="container">
-            <h2 className="text-center mt-0">At Your Service</h2>
+            <h2 className="text-center mt-0">{ data && data.service && data.service.title }</h2>
             <hr className="divider my-4" />
             <div className="row">
               <div className="col-lg-3 col-md-6 text-center">
@@ -317,12 +315,10 @@ class Home extends Component {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-8 text-center">
-                <h2 className="mt-0">Let's Get In Touch!</h2>
+                <h2 className="mt-0">{ data && data.contact && data.contact.title }</h2>
                 <hr className="divider my-4" />
-                <p className="text-muted mb-5">
-                  Ready to start your next project with us? Give us a call or
-                  send us an email and we will get back to you as soon as
-                  possible!
+                <p id='contactPara' className="text-muted mb-5">
+                  { data && data.contact && this.getHTML('contactPara', data.contact.content) }
                 </p>
               </div>
             </div>
