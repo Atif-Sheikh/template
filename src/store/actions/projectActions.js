@@ -14,4 +14,10 @@ export default class ProjectActions {
                 })
         }
     };
+
+    static sendEmailMessage(data) {
+        return (dispatch) => {
+            dispatch({ type: ActionTypes.SEND_EMAIL_MESSAGE, payload: data });
+        }
+    }
 };

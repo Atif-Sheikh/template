@@ -7,6 +7,10 @@ const initialState = {
     isLoading: false,
     isError: false,
     error: null,
+
+    sendEmailLoading: false,
+    sendEmail: false,
+    sendEmailError: null
 };
 export default function authReducer(state = initialState, action) {
     switch (action.type) {
@@ -30,6 +34,26 @@ export default function authReducer(state = initialState, action) {
                 isLoading: false,
                 isError: true,
                 error: action.msg
+            }
+        case ActionTypes.SEND_EMAIL_MESSAGE:
+            return {
+                ...state,
+                sendEmailLoading: true,
+                sendEmailError: null
+            }
+        case ActionTypes.SEND_EMAIL_MESSAGE_SUCCESS:
+            return {
+                ...state,
+                sendEmailLoading: false,
+                sendEmailError: null,
+                sendEmail: true
+            }
+        case ActionTypes.SEND_EMAIL_MESSAGE_FAILED:
+            return {
+                ...state,
+                sendEmailLoading: false,
+                sendEmailError: action.payload,
+                sendEmail: false
             }
 
         default:

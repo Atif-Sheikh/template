@@ -26,6 +26,10 @@ class ActionTypes {
     static LOGIN_SUCCESS = 'LOGIN_SUCCESS';
     static LOGIN_FAILED = 'LOGIN_FAILED';
 
+    static SEND_EMAIL_MESSAGE = 'SEND_EMAIL_MESSAGE';
+    static SEND_EMAIL_MESSAGE_SUCCESS = 'SEND_EMAIL_MESSAGE_SUCCESS';
+    static SEND_EMAIL_MESSAGE_FAILED = 'SEND_EMAIL_MESSAGE_FAILED';
+    
 };
 
 export { ActionTypes };

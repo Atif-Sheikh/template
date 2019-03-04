@@ -14,4 +14,13 @@ export default class ProjectMiddleWare {
             throw err;
         }
     }
+
+    static async SendEmailMessage(data){
+        try {
+
+        }
+        catch(err){
+            console.log("ERROR");
+        }
+    }
 }

@@ -1,13 +1,14 @@
 import React from 'react';
 import { Form, Col, Button, Jumbotron, FormText } from 'react-bootstrap';
+import { connect } from "react-redux";
 import fbIcon from '../../icons/brands/facebook.svg';
 import linkedinIcon from '../../icons/brands/linkedin.svg';
 import instIcon from '../../icons/brands/instagram.svg';
 import lineIcon from '../../icons/brands/line.svg';
 import skypeIcon from '../../icons/brands/skype.svg';
 import viberIcon from '../../icons/brands/viber.svg';
-
-export default class ContactForm extends React.Component {
+import ProjectActions from '../../store/actions/projectActions';
+class ContactForm extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -24,7 +25,7 @@ export default class ContactForm extends React.Component {
         e.preventDefault();
         const { firstName, lastName, email, message } = this.state;
         if (firstName && lastName && email && message) {
-
+            this.props.sendEmailMessage({ firstName, lastName, email, message });
         }
         // else {
         //     alert('Please submit all the details');
@@ -142,3 +143,21 @@ const styles = {
         width: 20
     }
 };
+
+const mapStateToProps = state => {
+    return {
+      isLoading: state.projectReducer.sendEmailLoading,
+      
+    };
+  };
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+        sendEmailMessage: (data) => dispatch(ProjectActions.sendEmailMessage(data)),
+    };
+  };
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ContactForm);

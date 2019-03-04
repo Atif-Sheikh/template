@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../../App.css';
 import '../../css/creative.css';
 import '../../css/creative.min.css';
@@ -31,7 +32,7 @@ export default class Navbar extends React.Component {
                                 <a className="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link js-scroll-trigger" href="/contact">Contact</a>
+                                <Link className="nav-link js-scroll-trigger" to="/contact"> Contact </Link>
                             </li>
                         </ul>
                     </div>
